@@ -1,11 +1,9 @@
-# QMK firmware for Curve83 (curved one-handed keyboard + trackpad, Raspberry Pi Pico)
+# QMK firmware for Curve83 (curved one-handed keyboard, Raspberry Pi Pico)
 
 ```
 keyboards/curve83/
 ├── keyboard.json          # MCU, pins, diode direction, and the key -> (row, col) map
-├── config.h               # trackpad (Cirque, I2C) + bootloader settings
-├── mcuconf.h              # turns on the RP2040's I2C1 for the trackpad
-├── rules.mk               # trackpad driver choice
+├── config.h               # bootloader settings (trackpad goes here later)
 └── keymaps/
     ├── default/keymap.c   # the real layout (base layer + Fn layer)
     └── matrix_test/       # wiring check: prints row/col of each key press
@@ -50,19 +48,22 @@ into the right matrix slot. Empty slots are `KC_NO` automatically.
 Rows: R0 = F-key row, R1 = number row, R2 = QWERTY row, R3 = ASDF row,
 R4 = ZXCV row, R5 = bottom row.
 
-## Pins: **edit these to match your wiring**
+## Pins
 
-The pins in `keyboard.json` are placeholders until the real wiring is known:
-
-| Signal | Pico pin (placeholder) |
+| Signal | Pico pin |
 |---|---|
-| Columns C0 ... C15 | GP0 ... GP15 |
-| Rows R0 ... R5 | GP16 ... GP21 |
-| Trackpad SDA / SCL | GP26 / GP27 (I2C1) |
+| Columns C0, C1, ... C15 | GP0, GP1, ... GP15 |
+| Row R5 (spacebar row) | GP16 |
+| Row R4 (ZXCV row) | GP17 |
+| Row R3 (ASDF row) | GP18 |
+| Row R2 (QWERTY row) | GP19 |
+| Row R1 (number row) | GP20 |
+| Row R0 (F-key row) | GP21 |
 
-`"diode_direction": "COL2ROW"` means the diode's black stripe (cathode) points
-toward the **row** wire. If your stripes point toward the column wires, change
-it to `"ROW2COL"`.
+Diodes: black stripe (cathode) faces the row wire, toward the spacebar, so
+`"diode_direction": "COL2ROW"`.
+
+Trackpad: not included yet.
 
 ## Build & flash
 
@@ -89,5 +90,5 @@ qmk compile -kb curve83 -km matrix_test
 Flash it, run `qmk console`, and press every key. Each press prints
 `row R, col C -> label`. If a key prints nothing, check that switch's diode
 and wires. If it prints the wrong label, fix that key's `"matrix"` entry in
-`keyboard.json` (or swap the pin order). Moving the trackpad prints x/y.
+`keyboard.json` (or swap the pin order).
 Then flash `default`.

@@ -36,11 +36,3 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-void pointing_device_init_user(void) {
-    uprintf("trackpad init done\n");
-}
-
-report_mouse_t pointing_device_task_user(report_mouse_t m) {
-    if (m.x || m.y) uprintf("trackpad x=%d y=%d\n", m.x, m.y);
-    return m;
-}

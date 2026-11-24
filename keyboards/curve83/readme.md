@@ -2,11 +2,11 @@
 
 ![Matrix map](../../docs/matrix_map.png)
 
-A curved one-handed 83-key keyboard with a trackpad, hand-wired (one diode per
+A curved one-handed 83-key keyboard, hand-wired (one diode per
 switch) to a Raspberry Pi Pico (RP2040).
 
 * Keyboard maintainer: [kev-wo](https://github.com/kev-wo)
-* Hardware supported: Raspberry Pi Pico, Cirque Pinnacle trackpad (I2C)
+* Hardware supported: Raspberry Pi Pico
 
 Make example for this keyboard (after setting up your build environment):
 

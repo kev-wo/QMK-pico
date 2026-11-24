@@ -1,3 +1,2 @@
-*.uf2
 .build/
 __pycache__/

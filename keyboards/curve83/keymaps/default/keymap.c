@@ -30,7 +30,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_LCTL, KC_LGUI, KC_LALT, MO(_FN), KC_DEL,  KC_SPC,  KC_RALT, KC_RCTL, KC_LEFT, KC_DOWN, KC_RGHT
     ),
     /*
-     * Fn layer (hold Fn): media, mouse buttons for the trackpad, bootloader.
+     * Fn layer (hold Fn): media, mouse buttons (mouse keys), bootloader.
      *   Fn+Esc     = jump to bootloader (flash new firmware)
      *   Fn+Space   = left click,  Fn+RAlt = right click,  Fn+Del = middle click
      *   Fn+Up/Down = scroll wheel
