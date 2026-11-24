@@ -1,0 +1,48 @@
+# Builds the firmware on GitHub every time the keyboard files change.
+# Download the result from the run's "Artifacts" box (Actions tab),
+# or from the Releases page for tagged versions (git tag v1.0 && git push --tags).
+name: Build firmware
+
+on:
+  push:
+    paths: ["keyboards/**", ".github/workflows/build.yml"]
+    tags: ["v*"]
+  pull_request:
+    paths: ["keyboards/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: ghcr.io/qmk/qmk_cli
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download QMK
+        run: |
+          git config --global --add safe.directory '*'
+          git clone --depth 1 https://github.com/qmk/qmk_firmware.git /qmk
+          cd /qmk && git submodule update --init --depth 1 --recursive \
+            lib/chibios lib/chibios-contrib lib/pico-sdk lib/printf lib/lufa lib/vusb
+
+      - name: Build
+        run: |
+          cp -r keyboards/curve83 /qmk/keyboards/
+          cd /qmk
+          qmk lint -kb curve83 -km default
+          make curve83:default curve83:matrix_test -j4
+          mkdir -p "$GITHUB_WORKSPACE/out" && cp curve83_*.uf2 "$GITHUB_WORKSPACE/out/"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: curve83-firmware
+          path: out/*.uf2
+
+      - name: Attach to release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.uf2
