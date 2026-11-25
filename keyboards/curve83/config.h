@@ -4,7 +4,7 @@
 
 /* ---------------------------------------------------------------------------
  * Raspberry Pi Pico
- * Wiring: columns C0..C15 = GP0..GP15, rows R5..R0 = GP16..GP21
+ * Wiring: columns C15..C1 = GP0..GP14, C0 = GP15, rows R5..R0 = GP16..GP21
  *         (so R0 / F-key row = GP21, R5 / spacebar row = GP16).
  *         Diodes: cathode stripe toward the row wire -> COL2ROW.
  *

@@ -66,7 +66,8 @@ Hold **Fn** for:
 
 | Signal | Pico pin |
 |---|---|
-| Columns C0, C1, ... C15 | GP0, GP1, ... GP15 |
+| Columns C15, C14, ... C1 | GP0, GP1, ... GP14 |
+| Column C0 | GP15 |
 | Row R5 (spacebar row) | GP16 |
 | Row R4 (ZXCV row) | GP17 |
 | Row R3 (ASDF row) | GP18 |
